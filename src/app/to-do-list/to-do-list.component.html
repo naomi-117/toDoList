@@ -1,13 +1,15 @@
-<div>
-     <h1>TO DO LIST</h1>
-    <form #form="ngForm" (ngSubmit)="addItem(form)">
-        <input class="checkBox" name="description" placeholder="New Task" required [(ngModel)]="newTask"> 
-        <button class="bs-btn-primary btn-lg" >+</button>
-    </form>
-    <ul>
-        <li *ngFor="let item of allItems">
-            <input class="checkTask" type="checkbox" [(ngModel)]="item.done">
-            <span class="task" [ngClass]="{'done': item.done}">{{ item.description }}</span>
-        </li>
-    </ul>
+<div class="bg-danger-subtle whitePage">
+    <div class="bs-emphasis-color centered-text">
+        <h1 style="color: #c0868b">TO DO LIST</h1>
+        <form #form="ngForm" (ngSubmit)="addItem(form)">
+            <input class="checkBox" style="color: #c47f85" name="description" placeholder="New Task" required [(ngModel)]="newTask"/> 
+            <button type="submit" class="btn btn-c-primary">+</button>
+        </form>
+        <ul>
+            <li *ngFor="let item of allItems">
+                <input class="checkTask" type="checkbox" [(ngModel)]="item.done"/>
+                <span class="task" [ngClass]="{ done: item.done }">{{ item.description }}</span>
+            </li>
+        </ul>
+    </div>
 </div>
