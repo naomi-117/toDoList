@@ -1,0 +1,13 @@
+<div>
+     <h1>TO DO LIST</h1>
+    <form #form="ngForm" (ngSubmit)="addItem(form)">
+        <input class="checkBox" name="description" placeholder="New Task" required [(ngModel)]="newTask"> 
+        <button class="bs-btn-primary btn-lg" >+</button>
+    </form>
+    <ul>
+        <li *ngFor="let item of allItems">
+            <input class="checkTask" type="checkbox" [(ngModel)]="item.done">
+            <span class="task" [ngClass]="{'done': item.done}">{{ item.description }}</span>
+        </li>
+    </ul>
+</div>
