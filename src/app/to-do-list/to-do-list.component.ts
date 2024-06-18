@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
 interface TodoItem {
   description: string;
@@ -13,12 +13,14 @@ interface TodoItem {
 export class ToDoListComponent {
   allItems: TodoItem[] = [];
   newTask: string = '';
+  searchQuery: string = ''; // Definiere searchQuery
 
   addItem(form: any) {
     // console.warn(form.value.description);
     if (this.newTask.trim() !== '') {
       this.allItems.push({ description: this.newTask, done: false });
       this.newTask = '';
+      form.reset();
     }
   }
 }

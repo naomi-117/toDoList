@@ -1,14 +1,21 @@
-<div class="bg-danger-subtle whitePage">
-    <div class="bs-emphasis-color centered-text">
-        <h1 style="color: #c0868b">TO DO LIST</h1>
-        <form #form="ngForm" (ngSubmit)="addItem(form)">
-            <input class="checkBox" style="color: #c47f85" name="description" placeholder="New Task" required [(ngModel)]="newTask"/> 
-            <button type="submit" class="btn btn-c-primary">+</button>
+<div class="page container mt-5">
+    <div>
+        <h1 style="color: #c47f85">TO DO LIST</h1>
+        <form #form="ngForm" (ngSubmit)="addItem(form)" class="d-flex">
+            <input class="form-control mb-1" style="color: #c47f85; border-color: #c47f85; border-width: 2px;" name="description" placeholder="New Task" required [(ngModel)]="newTask"/> 
+            <button type="submit" class="btn btn-c-primary mb-1">+</button>
         </form>
-        <ul>
-            <li *ngFor="let item of allItems">
-                <input class="checkTask" type="checkbox" [(ngModel)]="item.done"/>
-                <span class="task" [ngClass]="{ done: item.done }">{{ item.description }}</span>
+        <div class="search-container" style="position: relative;">
+            <input class="form-control" style="color: #c47f85; background-color: #cfafb1; padding-right: 40px;" name="search" [(ngModel)]="searchQuery"/>
+            <span class="material-icons" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: red;">search</span>
+            <!-- <span class="material-symbols-outlined">search</span> -->
+        </div>
+        <ul class="list-group mt-3">
+            <li class="list-group-item task-item" *ngFor="let item of allItems">
+                <div class="task-content">
+                    <input type="checkbox" [(ngModel)]="item.done"/>
+                    <span class="task" [ngClass]="{ done: item.done }">{{ item.description }}</span>
+                </div>
             </li>
         </ul>
     </div>
