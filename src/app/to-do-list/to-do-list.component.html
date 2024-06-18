@@ -1,14 +1,24 @@
-<div class="bg-danger-subtle whitePage">
-    <div class="bs-emphasis-color centered-text">
-        <h1 style="color: #c0868b">TO DO LIST</h1>
-        <form #form="ngForm" (ngSubmit)="addItem(form)">
-            <input class="checkBox" style="color: #c47f85" name="description" placeholder="New Task" required [(ngModel)]="newTask"/> 
-            <button type="submit" class="btn btn-c-primary">+</button>
+<div class="page container mt-5">
+    <div>
+        <h1 style="color: #c47f85">TO DO LIST</h1>
+        <form #form="ngForm" (ngSubmit)="addItem(form)" class="d-flex">
+            <input class="form-control" style="color: #c47f85; border-color: #c47f85; border-width: 2px;" name="description" placeholder="New Task" required [(ngModel)]="newTask"/>
+            <button type="submit" class="btn-icon" style="background: none; border: none; padding: 0;">
+                <mat-icon class="button" style="color: #c47f85; position: relative; top: 6px; width: 35px; height: 30px; font-size: 28px;">add_circle</mat-icon>
+            </button>
         </form>
-        <ul>
-            <li *ngFor="let item of allItems">
-                <input class="checkTask" type="checkbox" [(ngModel)]="item.done"/>
-                <span class="task" [ngClass]="{ done: item.done }">{{ item.description }}</span>
+        <div class="search-container" style="position: relative;">
+            <input class="form-control form-control-sm" style="background-color: #cca9ab; margin-top: 10px;" name="search" [(ngModel)]="searchQuery"/>
+            <button type="submit" class="btn-icon" style="background: none; border: none; padding: 0;">
+                <mat-icon class="material-symbols-rounded" style="color: white; position: absolute; right: 10px; top: 30%; transform: translateY(-50%);">search</mat-icon>
+            </button>
+        </div>
+        <ul class="list-group mt-3">
+            <li class="list-group-item task-item" *ngFor="let item of allItems">
+                <div class="task-content">
+                    <input type="checkbox" [(ngModel)]="item.done"/>
+                    <span class="task" [ngClass]="{ done: item.done }">{{ item.description }}</span>
+                </div>
             </li>
         </ul>
     </div>
