@@ -19,12 +19,8 @@
         <ul class="list-group mt-3">
             <li class="list-group-item task-item" *ngFor="let task of filteredTasks">
                 <div class="task-content">
-                    <button type="button" class="btn-icon buttons-style" (click)="toggleDone(task)">
-                        <mat-icon class="material-symbols-rounded" style="color: #c47f85;">{{ task.done ? 'check_box' : 'check_box_outline_blank' }}</mat-icon>
-                    </button>
-                    <button type="button" class="btn-icon buttons-style" (click)="deleteTask(task)">
-                        <mat-icon class="material-symbols-rounded" style="color: #c47f85; position: relative; left: 430px;">delete</mat-icon>
-                    </button>
+                    <mat-icon type="button" class="btn-icon buttons-style material-symbols-rounded" style="color: #c47f85;" (click)="toggleDone(task)">{{ task.done ? 'check_box' : 'check_box_outline_blank' }}</mat-icon>
+                    <mat-icon type="button" class="material-symbols-rounded btn-icon buttons-style" style="color: #c47f85; position: relative; left: 430px;" (click)="deleteTask(task)">delete</mat-icon>
                     <span class="task" [ngClass]="{ done: task.done }">{{ task.description }}</span>
                 </div>
             </li>
