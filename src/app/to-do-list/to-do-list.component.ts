@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface TodoItem {
   description: string;
@@ -11,6 +12,8 @@ interface TodoItem {
   styleUrls: ['./to-do-list.component.css']
 })
 export class ToDoListComponent {
+  constructor(private router: Router) {}
+
   allItems: TodoItem[] = [];
   newTask: string = '';
   searchQuery: string = ''; // Definiere searchQuery
@@ -22,5 +25,9 @@ export class ToDoListComponent {
       this.newTask = '';
       form.reset();
     }
+  }
+
+  homeButtonClicked() {
+    this.router.navigate(['home-page']);
   }
 }

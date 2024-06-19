@@ -23,6 +23,7 @@ h1 {
     font-family: 'Courier New', Courier, monospace;
     font-size: 70px;
     align-items: center;
+    margin-top: 10px;
 }
 ul {
     list-style-type: none; /* Entfernt die Standard-Punkte */
@@ -64,4 +65,9 @@ ul {
 }
 .search-container {
     align-items: center;
+}
+.home-button {
+    position: absolute;
+    top: -35px;
+    left: -20px;
 }
