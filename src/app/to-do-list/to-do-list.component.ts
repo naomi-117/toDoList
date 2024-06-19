@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-interface TodoItem {
+interface TodoTask {
   description: string;
   done: boolean;
 }
@@ -14,30 +14,45 @@ interface TodoItem {
 export class ToDoListComponent {
   constructor(private router: Router) {}
 
-  allItems: TodoItem[] = [];
+  allTasks: TodoTask[] = [];
   newTask: string = '';
   search: string = '';
-  filteredItems: TodoItem[] = this.allItems;
+  filteredTasks: TodoTask[] = this.allTasks;
 
   homeButtonClicked() {
     this.router.navigate(['home-page']);
   }
 
-  addItem(form: any) {
+  addTask(form: any) {
     if (this.newTask.trim() !== '') {
-      this.allItems.push({ description: this.newTask, done: false });
-      this.filteredItems = this.allItems;
+      this.allTasks.push({ description: this.newTask, done: false });
+      this.filterTasks();
       this.newTask = '';
       form.reset();
     }
   }
 
+  deleteTask(task: TodoTask) {
+    this.allTasks = this.allTasks.filter(t => t !== task);
+    this.filterTasks();
+  }
+
+  toggleDone(task: TodoTask) {
+    task.done = !task.done;
+    this.filterTasks();
+  }
+
   searchTasks() {
+    this.filterTasks();
+  }
+
+  private filterTasks() {
     if (this.search.trim() !== '') {
-      this.filteredItems = this.allItems.filter(item =>
-        item.description.toLowerCase().includes(this.search.toLowerCase()));
+      this.filteredTasks = this.allTasks.filter(task =>
+        task.description.toLowerCase().includes(this.search.toLowerCase())
+      );
     } else {
-      this.filteredItems = this.allItems;
+      this.filteredTasks = this.allTasks;
     }
   }
 }
