@@ -1,6 +1,6 @@
 <div class="page container mt-5">
     <div style="position: relative;">
-        <button type="submit" class="btn-icon home-button" (click)="homeButtonClicked()" style="background: none; border: none; padding: 0;">
+        <button type="submit" class="btn-icon home-button" matTooltip="Info about the action" (click)="homeButtonClicked()" style="background: none; border: none; padding: 0;">
             <mat-icon class="material-symbols-rounded" style="color: #c47f85; font-size: 28px;">home</mat-icon>
         </button>
         <h1 style="color: #c47f85; text-align: center;">TO DO LIST</h1>
@@ -11,13 +11,13 @@
             </button>
         </form>
         <div class="search-container" style="position: relative;">
-            <input class="form-control form-control-sm" style="background-color: #cca9ab; margin-top: 10px;" name="search" [(ngModel)]="searchQuery"/>
-            <button type="submit" class="btn-icon" style="background: none; border: none; padding: 0;">
+            <input class="form-control form-control-sm" style="background-color: #cca9ab; margin-top: 10px;" name="search" placeholder="Search task..." [(ngModel)]="search" (ngModelChange)="searchTasks()"/>
+            <button type="submit" class="btn-icon" (click)="searchTasks()" style="background: none; border: none; padding: 0;">
                 <mat-icon class="material-symbols-rounded" style="color: white; position: absolute; right: 10px; top: 30%; transform: translateY(-50%);">search</mat-icon>
             </button>
         </div>
         <ul class="list-group mt-3">
-            <li class="list-group-item task-item" *ngFor="let item of allItems">
+            <li class="list-group-item task-item" *ngFor="let item of filteredItems">
                 <div class="task-content">
                     <input type="checkbox" [(ngModel)]="item.done"/>
                     <span class="task" [ngClass]="{ done: item.done }">{{ item.description }}</span>

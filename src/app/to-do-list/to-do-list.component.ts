@@ -16,18 +16,28 @@ export class ToDoListComponent {
 
   allItems: TodoItem[] = [];
   newTask: string = '';
-  searchQuery: string = ''; // Definiere searchQuery
+  search: string = '';
+  filteredItems: TodoItem[] = this.allItems;
+
+  homeButtonClicked() {
+    this.router.navigate(['home-page']);
+  }
 
   addItem(form: any) {
-    // console.warn(form.value.description);
     if (this.newTask.trim() !== '') {
       this.allItems.push({ description: this.newTask, done: false });
+      this.filteredItems = this.allItems;
       this.newTask = '';
       form.reset();
     }
   }
 
-  homeButtonClicked() {
-    this.router.navigate(['home-page']);
+  searchTasks() {
+    if (this.search.trim() !== '') {
+      this.filteredItems = this.allItems.filter(item =>
+        item.description.toLowerCase().includes(this.search.toLowerCase()));
+    } else {
+      this.filteredItems = this.allItems;
+    }
   }
 }
