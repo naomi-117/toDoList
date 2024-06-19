@@ -1,26 +1,31 @@
 <div class="page container mt-5">
     <div style="position: relative;">
-        <button type="submit" class="btn-icon home-button" matTooltip="Info about the action" (click)="homeButtonClicked()" style="background: none; border: none; padding: 0;">
+        <button type="button" class="btn-icon home-button buttons-style" (click)="homeButtonClicked()">
             <mat-icon class="material-symbols-rounded" style="color: #c47f85; font-size: 28px;">home</mat-icon>
         </button>
-        <h1 style="color: #c47f85; text-align: center;">TO DO LIST</h1>
-        <form #form="ngForm" (ngSubmit)="addItem(form)" class="d-flex">
+        <h1 style="color: #c47f85; text-align: center; margin-bottom: 20px">TO DO LIST</h1>
+        <form #form="ngForm" (ngSubmit)="addTask(form)" class="d-flex">
             <input class="form-control" style="color: #c47f85; border-color: #c47f85; border-width: 2px;" name="description" placeholder="New Task" required [(ngModel)]="newTask"/>
-            <button type="submit" class="btn-icon" style="background: none; border: none; padding: 0;">
+            <button type="submit" class="btn-icon buttons-style">
                 <mat-icon class="material-symbols-rounded" style="color: #c47f85; position: relative; top: 6px; width: 35px; height: 30px; font-size: 28px;">add_circle</mat-icon>
             </button>
         </form>
         <div class="search-container" style="position: relative;">
             <input class="form-control form-control-sm" style="background-color: #cca9ab; margin-top: 10px;" name="search" placeholder="Search task..." [(ngModel)]="search" (ngModelChange)="searchTasks()"/>
-            <button type="submit" class="btn-icon" (click)="searchTasks()" style="background: none; border: none; padding: 0;">
+            <button type="button" class="btn-icon buttons-style" (click)="searchTasks()">
                 <mat-icon class="material-symbols-rounded" style="color: white; position: absolute; right: 10px; top: 30%; transform: translateY(-50%);">search</mat-icon>
             </button>
         </div>
         <ul class="list-group mt-3">
-            <li class="list-group-item task-item" *ngFor="let item of filteredItems">
+            <li class="list-group-item task-item" *ngFor="let task of filteredTasks">
                 <div class="task-content">
-                    <input type="checkbox" [(ngModel)]="item.done"/>
-                    <span class="task" [ngClass]="{ done: item.done }">{{ item.description }}</span>
+                    <button type="button" class="btn-icon buttons-style" (click)="toggleDone(task)">
+                        <mat-icon class="material-symbols-rounded" style="color: #c47f85;">{{ task.done ? 'check_box' : 'check_box_outline_blank' }}</mat-icon>
+                    </button>
+                    <button type="button" class="btn-icon buttons-style" (click)="deleteTask(task)">
+                        <mat-icon class="material-symbols-rounded" style="color: #c47f85; position: relative; left: 430px;">delete</mat-icon>
+                    </button>
+                    <span class="task" [ngClass]="{ done: task.done }">{{ task.description }}</span>
                 </div>
             </li>
         </ul>
