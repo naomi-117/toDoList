@@ -41,6 +41,9 @@ ul {
 .task-item {
     border-bottom: 1px solid #b9656c;
     border-radius: 0%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
     padding: 10px;
     display: flex;
     align-items: center;
