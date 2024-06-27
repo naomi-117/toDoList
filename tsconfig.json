@@ -24,6 +24,8 @@
       "dom"
     ]
   },
+  "demoUrl": "api/demo",
+  "filename": "assets/demotextfile.txt",
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
