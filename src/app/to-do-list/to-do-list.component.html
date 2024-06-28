@@ -5,7 +5,7 @@
         </button>
         <h1 style="color: #c47f85; text-align: center; margin-bottom: 20px">TO DO LIST</h1>
         <form #form="ngForm" (ngSubmit)="addTask(form)" class="d-flex">
-            <input class="form-control" style="color: #c47f85; border-color: #c47f85; border-width: 2px;" name="description" placeholder="New Task" required [(ngModel)]="task.description"/>
+            <input class="form-control" style="color: #c47f85; border-color: #c47f85; border-width: 2px;" name="description" placeholder="New task" required [(ngModel)]="task.description"/>
             <button type="submit" class="btn-icon buttons-style">
                 <mat-icon class="material-symbols-rounded" style="color: #c47f85; position: relative; top: 6px; width: 35px; height: 30px; font-size: 28px;">add_circle</mat-icon>
             </button>

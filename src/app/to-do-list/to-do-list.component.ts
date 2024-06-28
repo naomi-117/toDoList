@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { ApiService } from '../api.service';
 import { Task } from '../task';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-to-do-list',
@@ -11,10 +12,9 @@ import { Task } from '../task';
 })
 export class ToDoListComponent implements OnInit {
   allTasks: Task[] = [];
-  newTask: string = '';
   search: string = '';
   filteredTasks: Task[] = [];
-  task: Task;
+  task: Task = {description: '', done: false};
 
   constructor(
     private router: Router,
@@ -29,15 +29,34 @@ export class ToDoListComponent implements OnInit {
     this.router.navigate(['home-page']);
   }
 
-  addTask(form: any): void {
-    if (this.newTask.trim() !== '') {
-      this.allTasks.push({ description: this.newTask, done: false });
-      this.filterTasks();
-      console.warn(this.newTask);
-      this.apiService.postData(this.newTask);
-      this.newTask = '';
-      form.reset();
-    }
+  // addTask(form: any): void {
+  //     this.allTasks.push(this.task);
+  //     this.filterTasks();
+  //     this.apiService.postData(this.task);
+  //     this.task = { description: "", done: false };
+  //     form.reset();
+  // }
+
+//   addTask(form: NgForm): void {
+//     if (this.task.description.trim()) {
+//       this.allTasks.push(this.task);
+//       this.filterTasks();
+//       this.apiService.postData(this.task);
+//       this.task = { description: '', done: false };
+//       form.resetForm();
+//   }
+// }
+
+  addTask(form: NgForm): void {
+    if (this.task.description.trim()) {
+      this.apiService.postData(this.task).subscribe(
+      Task => {
+        this.allTasks.push(this.task);
+        this.filterTasks();
+        this.task = { description: '', done: false };
+        form.resetForm();
+      }
+    )};
   }
 
   deleteTask(task: Task): void {
