@@ -7,8 +7,10 @@
         <form #form="ngForm" (ngSubmit)="addTask(form)">
             <div class="task-input-container d-flex">
                 <input title="Add a new task" class="form-control task-input" name="description" placeholder="New task" required [(ngModel)]="task.description"/>
-                <button type="submit" title="Add a new task" class="btn-icon buttons-style add-button">
-                    <mat-icon class="material-symbols-rounded add-icon">add_circle</mat-icon>
+                <button type="submit" title="{{ task.editing ? 'Save task' : 'Add a new task' }}" class="btn-icon buttons-style">
+                    <mat-icon class="material-symbols-rounded add_save-icon">
+                        {{ task.editing ? 'save' : 'add_circle' }}
+                    </mat-icon>
                 </button>
             </div>
             <div class="d-flex align-items-center">

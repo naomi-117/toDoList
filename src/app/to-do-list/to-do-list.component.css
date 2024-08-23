@@ -59,18 +59,12 @@ ul {
     overflow: visible;
 }
 
-.add-icon {
+.add_save-icon {
     color: #c47f85;
     font-size: 28px;
     width: 35px;
     height: 30px;
     margin-top: 10px;
-}
-
-.add-button {
-    padding: 10px;
-    background-color: transparent;
-    border: none;
 }
 
 .task-input-container {

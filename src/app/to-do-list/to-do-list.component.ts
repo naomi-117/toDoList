@@ -49,18 +49,26 @@ export class ToDoListComponent implements OnInit {
     if (this.task.description == '') {
       console.warn("Fehler. Beschreibungsfeld ist leer");
     } else {
-      this.apiService.postData(this.task).subscribe({
-        next: (task) => {
-          this.resetTask(form);
-          this.showTasks();
-        }
-      });
-    }
+      if (this.task.editing) {
+          this.apiService.updateData(this.task).subscribe({
+          next: (updatedTask) => {
+            this.resetTask(form);
+            this.showTasks();
+          }
+        });
+      } else {
+        this.apiService.postData(this.task).subscribe({
+          next: (newTask) => {
+            this.resetTask(form);
+            this.showTasks();
+          }
+        });
+      } 
+    } 
   }
 
   selectTask(task: Task): void {
     console.warn(' selectedTask', task);
-    
     this.selectedTask = task;
     this.selected = TaskPriority.Lowest;
   }
@@ -104,7 +112,6 @@ export class ToDoListComponent implements OnInit {
         const index = this.allTasks.findIndex(t => t.id === updatedTask.id);
         if (index !== -1) {
           this.allTasks[index] = updatedTask;
-          this.updateTasks();
         }
       }
     });
@@ -114,16 +121,23 @@ export class ToDoListComponent implements OnInit {
     if (task.id) {
       this.apiService.deleteData(task.id).subscribe({
         next: () => {
-          this.allTasks = this.allTasks.filter(t => t.id !== task.id);
-          this.updateTasks();
+          this.showTasks();        
         }
       })
     }
   }
 
   editTask(task: Task): void {
-    this.task.editing = true;
-    this.task = { ...task};
+    if (task.id) {
+      this.apiService.updateData(task).subscribe({
+        next: () => {
+          this.task = {...task};
+          this.task.editing = true;
+        }
+      })
+    } else {
+      console.warn("Fehler beim bearbeiten");
+    }
   }
 
   combineClasses(task: Task): { [key: string]: boolean } {
@@ -161,15 +175,10 @@ export class ToDoListComponent implements OnInit {
   } 
 
   // Private methods
-  private updateTasks(): void {
-    this.sortTasks();
-    this.filterTasks();
-  }
-
   private resetTask(form: NgForm): void {
     this.task = { description: '', done: false, priority: TaskPriority.Lowest, deadline: '', editing: false };
     form.resetForm();
-    this.updateTasks();
+    this.selected = TaskPriority.Lowest;
   }
 
   private sortTasks(): void {
