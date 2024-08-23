@@ -104,7 +104,6 @@ export class ToDoListComponent implements OnInit {
         const index = this.allTasks.findIndex(t => t.id === updatedTask.id);
         if (index !== -1) {
           this.allTasks[index] = updatedTask;
-          this.updateTasks();
         }
       }
     });
@@ -114,16 +113,25 @@ export class ToDoListComponent implements OnInit {
     if (task.id) {
       this.apiService.deleteData(task.id).subscribe({
         next: () => {
-          this.allTasks = this.allTasks.filter(t => t.id !== task.id);
-          this.updateTasks();
+          this.showTasks();        
         }
       })
     }
   }
 
   editTask(task: Task): void {
-    this.task.editing = true;
-    this.task = { ...task};
+    if (task.id) {
+      console.warn('task', task);
+      
+      this.apiService.updateData(task).subscribe({
+        next: () => {
+          this.task.editing = true;
+          this.task = {...task};
+        }
+      })
+    } else {
+      console.warn("Fehler beim bearbeiten");
+    }
   }
 
   combineClasses(task: Task): { [key: string]: boolean } {
@@ -161,15 +169,9 @@ export class ToDoListComponent implements OnInit {
   } 
 
   // Private methods
-  private updateTasks(): void {
-    this.sortTasks();
-    this.filterTasks();
-  }
-
   private resetTask(form: NgForm): void {
     this.task = { description: '', done: false, priority: TaskPriority.Lowest, deadline: '', editing: false };
     form.resetForm();
-    this.updateTasks();
   }
 
   private sortTasks(): void {
