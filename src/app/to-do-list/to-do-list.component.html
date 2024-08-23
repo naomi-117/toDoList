@@ -1,30 +1,77 @@
 <div class="page container mt-5">
-    <div style="position: relative;">
-        <button type="button" class="btn-icon home-button buttons-style" (click)="homeButtonClicked()">
-            <mat-icon class="material-symbols-rounded" style="color: #c47f85; font-size: 28px;">home</mat-icon>
+    <div class="relative">
+        <button type="button" title="Go to home page" class="btn-icon home-button buttons-style" (click)="homeButtonClicked()">
+            <mat-icon class="material-symbols-rounded home-icon">home</mat-icon>
         </button>
-        <h1 style="color: #c47f85; text-align: center; margin-bottom: 20px">TO DO LIST</h1>
-        <form #form="ngForm" (ngSubmit)="addTask(form)" class="d-flex">
-            <input class="form-control" style="color: #c47f85; border-color: #c47f85; border-width: 2px;" name="description" placeholder="New task" required [(ngModel)]="task.description"/>
-            <button type="submit" class="btn-icon buttons-style">
-                <mat-icon class="material-symbols-rounded" style="color: #c47f85; position: relative; top: 6px; width: 35px; height: 30px; font-size: 28px;">add_circle</mat-icon>
-            </button>
+        <h1 class="title">TO DO LIST</h1>
+        <form #form="ngForm" (ngSubmit)="addTask(form)">
+            <div class="task-input-container d-flex">
+                <input title="Add a new task" class="form-control task-input" name="description" placeholder="New task" required [(ngModel)]="task.description"/>
+                <button type="submit" title="Add a new task" class="btn-icon buttons-style add-button">
+                    <mat-icon class="material-symbols-rounded add-icon">add_circle</mat-icon>
+                </button>
+            </div>
+            <div class="d-flex align-items-center">
+                <div class="labels-container me-4">
+                    <h2 title="Priority" class="priority-label">Priority:</h2>
+                    <div class="btn-toolbar" role="toolbar">
+                        <div class="btn-group" role="group">
+                            <button [title]="getPriorityTitle(priority)" type="button" class="btn"
+                                    *ngFor="let priority of [TaskPriority.Highest, TaskPriority.High, TaskPriority.Medium, TaskPriority.Low, TaskPriority.Lowest]"
+                                    [ngClass]="{
+                                        'btn-active': selected === priority,
+                                        'priority-highest-button': priority === TaskPriority.Highest,
+                                        'priority-high-button': priority === TaskPriority.High,
+                                        'priority-medium-button': priority === TaskPriority.Medium,
+                                        'priority-low-button': priority === TaskPriority.Low,
+                                        'priority-lowest-button': priority === TaskPriority.Lowest
+                                    }"
+                                    (click)="setPriority(priority)">
+                                {{ priority }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="deadline-container">
+                    <mat-form-field class="datepicker" title="Select a deadline">
+                        <mat-label>Select a deadline</mat-label>
+                        <input matInput [matDatepicker]="datepicker" [(ngModel)]="task.deadline" style="color: #b9656c; font-size: large" name="deadline">
+                        <span class="task-deadline">{{ task.deadline }}</span>
+                        <mat-hint>DD.MM.YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #datepicker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-icon [title]="task.deadline ? 'Without deadline' : 'With deadline'" type="button" class="btn-icon material-symbols-rounded deadline-availability buttons-style" (click)="withDeadline()">
+                        {{ task.deadline ? 'event_busy' : 'event_available'}}
+                    </mat-icon>
+                </div>
+            </div>
         </form>
-        <div class="search-container" style="position: relative;">
-            <input class="form-control form-control-sm" style="background-color: #cca9ab; margin-top: 10px;" name="search" placeholder="Search task..." [(ngModel)]="search" (ngModelChange)="searchTasks()"/>
-            <button type="button" class="btn-icon buttons-style" (click)="searchTasks()">
-                <mat-icon class="material-symbols-rounded" style="color: white; position: absolute; right: 10px; top: 30%; transform: translateY(-50%);">search</mat-icon>
-            </button>
+        <div class="search-container relative">
+            <input class="form-control form-control-sm search-input" name="search" placeholder="Search task..." [(ngModel)]="search" (ngModelChange)="searchTasks()"/>
         </div>
         <ul class="list-group mt-3">
             <li class="list-group-item task-item" *ngFor="let task of filteredTasks">
-                <div class="task-content">
-                    <mat-icon type="button" class="btn-icon buttons-style material-symbols-rounded" style="color: #c47f85; overflow: visible;" (click)="toggleDone(task)">{{ task.done ? 'check_box' : 'check_box_outline_blank' }}</mat-icon>
-                    <mat-icon type="button" class="material-symbols-rounded btn-icon buttons-style" style="color: #c47f85; position: relative; left: 470px; overflow: visible;" (click)="deleteTask(task)">delete</mat-icon>
-                    <span class="task" [ngClass]="{ done: task.done }">{{ task.description }}</span>
+                <div class="task-content" [title]="task.done ? 'Checked' : 'Unchecked' " >
+                    <mat-icon type="button" class="btn-icon buttons-style material-symbols-rounded task-icon" (click)="toggleDone(task)">
+                        {{ task.done ? 'check_box' : 'check_box_outline_blank' }}
+                    </mat-icon>
+                    <span class="task-deadline" >{{ task.deadline | date:'dd.MM.yyyy' }}</span>
+
+                    
+                    <div *ngIf="!task.editing">
+                        <span class="task" [ngClass]="combineClasses(task)" (click)="selectTask(task)">{{ task.description }}</span>
+                        <button type="button" title="Edit task" class="btn-icon edit-task buttons-style" (click)="editTask(task)">
+                            <mat-icon type="button" title="Edit task" class="material-symbols-rounded edit-task">edit</mat-icon>
+                        </button>
+                    </div>
+                    <div *ngIf="task.editing">
+                        <input type="text" class="form-control" [(ngModel)]="task.description">
+                        <button type="button" (click)="task.editing = false">Save</button> 
+                    </div>
+                    <mat-icon type="button" title="Delete task" class="material-symbols-rounded btn-icon buttons-style delete-icon" (click)="deleteTask(task)">delete</mat-icon>
                 </div>
             </li>
         </ul>
     </div>
 </div>
-<div>

@@ -9,21 +9,24 @@ import { Observable } from 'rxjs';
 })
 
 export class ApiService {
+
   private apiUrl = 'http://localhost:8080/todolist';
 
   constructor(private http: HttpClient) { }
 
-  // getData(description: string): Observable<any> {
-  //   // console.warn('im here', description);
-  //   return this.http.get<any>(`${this.apiUrl}/todolist/${description}`);
-  // }
- 
-  // getData(taskId: string): Observable<Task> {
-  //   return this.http.get<Task>(`${this.apiUrl}/${taskId}`);
-  // }
+  getData(): Observable<Task[]> {
+    return this.http.get<Task[]>(this.apiUrl);
+  }
 
   postData(task: Task): Observable<Task> {    
     return this.http.post<Task>(this.apiUrl, task);
-    // console.warn(task);
+  }
+
+  updateData(task: Task): Observable<Task> {
+    return this.http.put<Task>(`${this.apiUrl}/${task.id}`, task);
+  }
+
+  deleteData(id: number): Observable<Task> {
+    return this.http.delete<Task>(`${this.apiUrl}/${id}`);
   }
 }
