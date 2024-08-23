@@ -49,18 +49,26 @@ export class ToDoListComponent implements OnInit {
     if (this.task.description == '') {
       console.warn("Fehler. Beschreibungsfeld ist leer");
     } else {
-      this.apiService.postData(this.task).subscribe({
-        next: (task) => {
-          this.resetTask(form);
-          this.showTasks();
-        }
-      });
-    }
+      if (this.task.editing) {
+          this.apiService.updateData(this.task).subscribe({
+          next: (updatedTask) => {
+            this.resetTask(form);
+            this.showTasks();
+          }
+        });
+      } else {
+        this.apiService.postData(this.task).subscribe({
+          next: (newTask) => {
+            this.resetTask(form);
+            this.showTasks();
+          }
+        });
+      } 
+    } 
   }
 
   selectTask(task: Task): void {
     console.warn(' selectedTask', task);
-    
     this.selectedTask = task;
     this.selected = TaskPriority.Lowest;
   }
@@ -121,12 +129,10 @@ export class ToDoListComponent implements OnInit {
 
   editTask(task: Task): void {
     if (task.id) {
-      console.warn('task', task);
-      
       this.apiService.updateData(task).subscribe({
         next: () => {
-          this.task.editing = true;
           this.task = {...task};
+          this.task.editing = true;
         }
       })
     } else {
@@ -172,6 +178,7 @@ export class ToDoListComponent implements OnInit {
   private resetTask(form: NgForm): void {
     this.task = { description: '', done: false, priority: TaskPriority.Lowest, deadline: '', editing: false };
     form.resetForm();
+    this.selected = TaskPriority.Lowest;
   }
 
   private sortTasks(): void {
