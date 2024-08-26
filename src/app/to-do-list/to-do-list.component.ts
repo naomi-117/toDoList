@@ -1,4 +1,4 @@
-import { Component, OnInit, Pipe, PipeTransform } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
 import { DatePipe } from "@angular/common";
@@ -46,8 +46,8 @@ export class ToDoListComponent implements OnInit {
   }
 
   addTask(form: NgForm) {
-    if (this.task.description == '') {
-      console.warn("Fehler. Beschreibungsfeld ist leer");
+    if (this.task.description === '') {
+      console.warn("Error: Description field is empty");
       return;
     }
     
@@ -56,9 +56,6 @@ export class ToDoListComponent implements OnInit {
         next: (updatedTask) => {
           this.resetTask(form);
           this.showTasks();
-        },
-        error: (error) => {
-          console.error('Error updating task', error);
         }
       });
     } else {
@@ -66,12 +63,10 @@ export class ToDoListComponent implements OnInit {
         next: (newTask) => {
           this.resetTask(form);
           this.showTasks();
-        },
-        error: (error) => {
-          console.error('Error creating task', error);
         }
       });
     }
+    return;
   }
 
   selectTask(task: Task): void {
@@ -180,7 +175,7 @@ export class ToDoListComponent implements OnInit {
       default:
         return '';
     }
-  } 
+  }
 
   // Private methods
   private resetTask(form: NgForm): void {
