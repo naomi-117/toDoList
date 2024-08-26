@@ -48,23 +48,30 @@ export class ToDoListComponent implements OnInit {
   addTask(form: NgForm) {
     if (this.task.description == '') {
       console.warn("Fehler. Beschreibungsfeld ist leer");
+      return;
+    }
+    
+    if (this.task.editing) {
+      this.apiService.updateData(this.task).subscribe({
+        next: (updatedTask) => {
+          this.resetTask(form);
+          this.showTasks();
+        },
+        error: (error) => {
+          console.error('Error updating task', error);
+        }
+      });
     } else {
-      if (this.task.editing) {
-          this.apiService.updateData(this.task).subscribe({
-          next: (updatedTask) => {
-            this.resetTask(form);
-            this.showTasks();
-          }
-        });
-      } else {
-        this.apiService.postData(this.task).subscribe({
-          next: (newTask) => {
-            this.resetTask(form);
-            this.showTasks();
-          }
-        });
-      } 
-    } 
+      this.apiService.postData(this.task).subscribe({
+        next: (newTask) => {
+          this.resetTask(form);
+          this.showTasks();
+        },
+        error: (error) => {
+          console.error('Error creating task', error);
+        }
+      });
+    }
   }
 
   selectTask(task: Task): void {
@@ -133,6 +140,7 @@ export class ToDoListComponent implements OnInit {
         next: () => {
           this.task = {...task};
           this.task.editing = true;
+          this.selected = task.priority as TaskPriority;
         }
       })
     } else {

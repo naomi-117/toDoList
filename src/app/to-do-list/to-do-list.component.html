@@ -69,7 +69,7 @@
                     </div>
                     <div *ngIf="task.editing">
                         <input type="text" class="form-control" [(ngModel)]="task.description">
-                        <button type="button" (click)="task.editing = false">Save</button> 
+                        <button type="button" (click)="task.editing = false; addTask(form)">Save</button> 
                     </div>
                     <mat-icon type="button" title="Delete task" class="material-symbols-rounded btn-icon buttons-style delete-icon" (click)="deleteTask(task)">delete</mat-icon>
                 </div>
