@@ -46,7 +46,7 @@ export class ToDoListComponent implements OnInit {
   }
 
   addTask(form: NgForm) {
-    if (this.task.description === '') {
+    if (this.task.description === '' || this.task.description == null) {
       console.warn("Error: Description field is empty");
       return;
     }
@@ -63,8 +63,9 @@ export class ToDoListComponent implements OnInit {
         next: (newTask) => {
           this.resetTask(form);
           this.showTasks();
-        }
+        },
       });
+      console.warn('Adding this task:', this.task.description);
     }
     return;
   }
@@ -113,7 +114,7 @@ export class ToDoListComponent implements OnInit {
       next: updatedTask => {
         const index = this.allTasks.findIndex(t => t.id === updatedTask.id);
         if (index !== -1) {
-          this.allTasks[index] = updatedTask;
+          this.sortTasks();
         }
       }
     });
