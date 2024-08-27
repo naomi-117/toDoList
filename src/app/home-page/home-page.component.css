@@ -1,4 +1,5 @@
 .home-page-container {
+    font-family: Verdana;
     text-align: center;
     padding: 100px;
     background-color: #ffffff;
@@ -27,4 +28,9 @@
 .home-page-container a:hover {
     background-color: #c47f85;
     font-size: 18px;
+}
+
+h2 {
+    font-size: 50px;
+    margin-bottom: 25px;
 }
