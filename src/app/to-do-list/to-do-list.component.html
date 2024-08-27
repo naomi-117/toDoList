@@ -4,6 +4,7 @@
             <mat-icon class="material-symbols-rounded home-icon">home</mat-icon>
         </button>
         <h1 class="title">TO DO LIST</h1>
+        <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
         <form #form="ngForm" (ngSubmit)="addTask(form)">
             <div class="task-input-container d-flex">
                 <input title="Add a new task" class="form-control task-input" name="description" placeholder="New task" required [(ngModel)]="task.description"/>

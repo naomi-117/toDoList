@@ -98,7 +98,7 @@ ul {
     border-left: none;
     border-right: none;
     padding: 10px;
-    display: flex;
+    width: 520px;
     align-items: center;
 }
 
@@ -259,4 +259,11 @@ ul {
     overflow: visible;
     left: 230px;
     bottom: 8px;
+}
+
+.error {
+    color: red;
+    /* position: relative; */
+    margin-bottom: 20px;
+    align-items: center;
 }
