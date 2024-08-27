@@ -38,8 +38,8 @@
                 <div class="deadline-container">
                     <mat-form-field class="datepicker" title="Select a deadline">
                         <mat-label>Select a deadline</mat-label>
-                        <input matInput [matDatepicker]="datepicker" [(ngModel)]="task.deadline" style="color: #b9656c; font-size: large" name="deadline">
-                        <span class="task-deadline">{{ task.deadline }}</span>
+                        <input matInput [matDatepicker]="datepicker" [(ngModel)]="task.deadline" style="color: #b9656c; font-size: large" name="deadline" [placeholder]="task.deadline ? '' : 'Select a deadline'">
+                        <span class="task-deadline" *ngIf="task.deadline">{{ task.deadline | date: 'dd.MM.yyyy' }}</span>
                         <mat-hint>DD.MM.YYYY</mat-hint>
                         <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
                         <mat-datepicker #datepicker></mat-datepicker>
@@ -55,11 +55,11 @@
         </div>
         <ul class="list-group mt-3">
             <li class="list-group-item task-item" *ngFor="let task of filteredTasks">
-                <div class="task-content" [title]="task.done ? 'Checked' : 'Unchecked' " >
+                <div class="task-content">
                     <mat-icon type="button" class="btn-icon buttons-style material-symbols-rounded task-icon" (click)="toggleDone(task)">
                         {{ task.done ? 'check_box' : 'check_box_outline_blank' }}
                     </mat-icon>
-                    <span class="task-deadline" >{{ task.deadline | date:'dd.MM.yyyy' }}</span>
+                    <span class="task-deadline">{{ task.deadline | date:'dd.MM.yyyy' }}</span>
 
                     
                     <div *ngIf="!task.editing">

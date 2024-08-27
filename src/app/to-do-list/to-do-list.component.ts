@@ -51,6 +51,15 @@ export class ToDoListComponent implements OnInit {
       console.warn("Error: Description field is empty");
       return;
     }
+
+    if (this.duplicateTask(this.task)) {
+      console.warn("Error: This task already exists");
+      this.errorMessage = ("This task already exist");
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 1000);
+      return;
+    }
     
     if (this.task.editing) {
       this.apiService.updateData(this.task).subscribe({
@@ -80,6 +89,7 @@ export class ToDoListComponent implements OnInit {
   setPriority(priority: TaskPriority): void {
     this.selected = priority;
     if (this.selectedTask) {
+      this.selectedTask.priority = priority;
       this.apiService.updateData(this.selectedTask).subscribe({
         next: updatedTask => {
           const index = this.allTasks.findIndex(t => t.id === updatedTask.id); 
@@ -141,7 +151,7 @@ export class ToDoListComponent implements OnInit {
         }
       })
     } else {
-      console.warn("Fehler beim bearbeiten");
+      console.warn("Error while editing");
     }
   }
 
@@ -203,6 +213,14 @@ export class ToDoListComponent implements OnInit {
         return new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
       }
 
+      if (!a.deadline && b.deadline) {
+        return 1;
+      }
+
+      if (a.deadline && !b.deadline) {
+          return -1;
+      }
+
       //Falls alles gleich ist, bleibt die Reihenfolge gleich
       return 0;
     });
@@ -216,5 +234,14 @@ export class ToDoListComponent implements OnInit {
     } else {
       this.filteredTasks = this.allTasks;
     }
+  }
+  
+  private duplicateTask(newTask: Task): boolean {
+    return this.allTasks.some(task => 
+      task.id !== newTask.id &&
+      task.description.toLowerCase() === newTask.description.toLowerCase() &&
+      task.priority === newTask.priority &&
+      task.deadline === newTask.deadline
+    );
   }
 }
