@@ -46,12 +46,10 @@ export class ToDoListComponent implements OnInit {
 
   addTask(form: NgForm) {
     if (this.task.description === '' || this.task.description == null) {
-      console.warn("Error: Description field is empty");
       return;
     }
 
     if (this.duplicateTask(this.task)) {
-      console.warn("Error: This task already exists");
       this.errorMessage = "This task already exist";
       setTimeout(() => {
         this.errorMessage = '';
@@ -73,13 +71,11 @@ export class ToDoListComponent implements OnInit {
           this.showTasks();
         },
       });
-      console.warn('Adding this task:', this.task.description);
     }
     return;
   }
 
   selectTask(task: Task): void {
-    console.warn(' selectedTask', task);
     this.selectedTask = task;
     this.selected = TaskPriority.Lowest;
   }
@@ -149,7 +145,6 @@ export class ToDoListComponent implements OnInit {
         }
       })
     } else {
-      console.warn("Error while editing");
     }
   }
 
