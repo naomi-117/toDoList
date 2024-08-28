@@ -196,30 +196,21 @@ export class ToDoListComponent implements OnInit {
 
   private sortTasks(): void {
     this.allTasks.sort((a, b) => {
-      //Erst nach dem Erledigungsstatus sortieren
       if (a.done !== b.done) {
         return a.done ? 1 : -1;
       }
-
-      //Wenn der Erledigungsstatus gleich ist, nach Priorität
       if (a.priority !== b.priority) {
         return a.priority > b.priority ? 1 : -1;
       }
-
-      //Wenn die Priorität gleich ist, nach Deadline sortieren
       if (a.deadline && b.deadline) {
         return new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
       }
-
       if (!a.deadline && b.deadline) {
         return 1;
       }
-
       if (a.deadline && !b.deadline) {
           return -1;
       }
-
-      //Falls alles gleich ist, bleibt die Reihenfolge gleich
       return 0;
     });
   }

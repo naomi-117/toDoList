@@ -14,8 +14,8 @@
     height: 820px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px; /* Set a maximum width for the table */
-    overflow-y: auto; /* Add vertical scroll if content overflows */
+    max-width: 600px;
+    overflow-y: auto;
 }
 
 h1 {
@@ -26,7 +26,7 @@ h1 {
 }
 
 ul {
-    list-style-type: none; /* Entfernt die Standard-Punkte */
+    list-style-type: none;
     padding: 0;
 }
 
@@ -106,7 +106,7 @@ ul {
     display: flex;
     align-items: center;
     hyphens: auto;
-    overflow-wrap: break-word; /* Ensures long words wrap */ /* For modern browsers */
+    overflow-wrap: break-word;
 }
 
 .d-flex {
@@ -263,7 +263,6 @@ ul {
 
 .error {
     color: red;
-    /* position: relative; */
     margin-bottom: 20px;
     align-items: center;
 }
