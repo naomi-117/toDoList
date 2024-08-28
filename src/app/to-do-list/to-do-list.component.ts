@@ -244,45 +244,7 @@ export class ToDoListComponent implements OnInit {
       ) {
         return true;
       }
-  
-      // If none of the above conditions matched
       return false;
     });
   }
-  
-
-  // private duplicateTask(newTask: Task): boolean {
-  //   return this.allTasks.some(task => {
-
-  //     if (task.id === newTask.id) {
-  //       console.warn("same task");
-  //       return true;
-  //     }
-     
-  //     // if (
-  //     //   task.description.toLowerCase() === newTask.description.toLowerCase() &&
-  //     //   task.priority === newTask.priority &&
-  //     //   task.deadline !== newTask.deadline
-  //     // ) {
-  //     //     console.warn("same description, same priority but different deadline");
-  //     //     return false;
-  //     // } else 
-  //     if (
-  //     //   task.description.toLowerCase() === newTask.description.toLowerCase() &&
-  //     //   task.priority !== newTask.priority
-  //     // ) {
-  //     //     console.warn("same description but different priority (deadline does not matter)");
-  //     //     return false;
-  //     // } else if (
-  //       task.description.toLowerCase() === newTask.description.toLowerCase() &&
-  //       task.priority === newTask.priority &&
-  //       task.deadline === task.deadline
-  //     ) {
-  //         console.warn("same description, same priority, same deadline");
-  //         return true;
-  //     }
-  //     console.warn("What?", task);
-  //     return true;
-  //   });
-  // }
 }
