@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
-import { DatePipe } from "@angular/common";
 
 import { ApiService } from "../api.service";
 import { Task } from "../task";
@@ -33,8 +32,7 @@ export class ToDoListComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private apiService: ApiService,
-    public datePipe: DatePipe
+    private apiService: ApiService
   ) {}
 
   ngOnInit(): void {
@@ -54,7 +52,7 @@ export class ToDoListComponent implements OnInit {
 
     if (this.duplicateTask(this.task)) {
       console.warn("Error: This task already exists");
-      this.errorMessage = ("This task already exist");
+      this.errorMessage = "This task already exist";
       setTimeout(() => {
         this.errorMessage = '';
       }, 1000);
@@ -237,11 +235,54 @@ export class ToDoListComponent implements OnInit {
   }
   
   private duplicateTask(newTask: Task): boolean {
-    return this.allTasks.some(task => 
-      task.id !== newTask.id &&
-      task.description.toLowerCase() === newTask.description.toLowerCase() &&
-      task.priority === newTask.priority &&
-      task.deadline === newTask.deadline
-    );
+    return this.allTasks.some(task => {
+      if (task.id === newTask.id) {
+        return false;
+      }
+      if (
+        task.description.toLowerCase() === newTask.description.toLowerCase()
+      ) {
+        return true;
+      }
+  
+      // If none of the above conditions matched
+      return false;
+    });
   }
+  
+
+  // private duplicateTask(newTask: Task): boolean {
+  //   return this.allTasks.some(task => {
+
+  //     if (task.id === newTask.id) {
+  //       console.warn("same task");
+  //       return true;
+  //     }
+     
+  //     // if (
+  //     //   task.description.toLowerCase() === newTask.description.toLowerCase() &&
+  //     //   task.priority === newTask.priority &&
+  //     //   task.deadline !== newTask.deadline
+  //     // ) {
+  //     //     console.warn("same description, same priority but different deadline");
+  //     //     return false;
+  //     // } else 
+  //     if (
+  //     //   task.description.toLowerCase() === newTask.description.toLowerCase() &&
+  //     //   task.priority !== newTask.priority
+  //     // ) {
+  //     //     console.warn("same description but different priority (deadline does not matter)");
+  //     //     return false;
+  //     // } else if (
+  //       task.description.toLowerCase() === newTask.description.toLowerCase() &&
+  //       task.priority === newTask.priority &&
+  //       task.deadline === task.deadline
+  //     ) {
+  //         console.warn("same description, same priority, same deadline");
+  //         return true;
+  //     }
+  //     console.warn("What?", task);
+  //     return true;
+  //   });
+  // }
 }
