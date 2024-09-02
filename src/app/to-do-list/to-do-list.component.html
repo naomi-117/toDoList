@@ -8,9 +8,9 @@
         <form #form="ngForm" (ngSubmit)="addTask(form)">
             <div class="task-input-container d-flex">
                 <input title="Add a new task" class="form-control task-input" name="description" placeholder="New task" required [(ngModel)]="task.description"/>
-                <button type="submit" title="{{ task.editing ? 'Save task' : 'Add a new task' }}" class="btn-icon buttons-style">
+                <button type="submit" title="{{ editing ? 'Save task' : 'Add a new task' }}" class="btn-icon buttons-style">
                     <mat-icon class="material-symbols-rounded add_save-icon">
-                        {{ task.editing ? 'save' : 'add_circle' }}
+                        {{ editing ? 'save' : 'add_circle' }}
                     </mat-icon>
                 </button>
             </div>
@@ -60,17 +60,16 @@
                         {{ task.done ? 'check_box' : 'check_box_outline_blank' }}
                     </mat-icon>
                     <span class="task-deadline">{{ task.deadline | date:'dd.MM.yyyy' }}</span>
-
                     
-                    <div *ngIf="!task.editing">
+                    <div *ngIf="editTask?.id !== task.id">
                         <span class="task" [ngClass]="combineClasses(task)" (click)="selectTask(task)">{{ task.description }}</span>
-                        <button type="button" title="Edit task" class="btn-icon edit-task buttons-style" (click)="editTask(task)">
+                        <button type="button" title="Edit task" class="btn-icon edit-task buttons-style" (click)="editingTask(task)">
                             <mat-icon type="button" title="Edit task" class="material-symbols-rounded edit-task">edit</mat-icon>
                         </button>
                     </div>
-                    <div *ngIf="task.editing">
+                    <div *ngIf="editTask?.id == task.id">
                         <input type="text" class="form-control" [(ngModel)]="task.description">
-                        <button type="button" (click)="task.editing = false; addTask(form)">Save</button> 
+                        <button type="button" (click)="editing = false; addTask(form)">Save</button> 
                     </div>
                     <mat-icon type="button" title="Delete task" class="material-symbols-rounded btn-icon buttons-style delete-icon" (click)="deleteTask(task)">delete</mat-icon>
                 </div>
