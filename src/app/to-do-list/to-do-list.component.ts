@@ -23,7 +23,7 @@ export class ToDoListComponent implements OnInit {
   allTasks: Task[] = [];
   search: string = '';
   filteredTasks: Task[] = [];
-  task: Task = { description: '', done: false, priority: TaskPriority.Lowest, deadline: '', editing: false };
+  task: Task = { description: '', done: false, priority: TaskPriority.Lowest, deadline: undefined };
   selected: TaskPriority = TaskPriority.Lowest;
   selectedTask: Task | null = null;
   checkboxDeadline: boolean = false;
