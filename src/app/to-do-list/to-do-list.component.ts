@@ -47,28 +47,23 @@ export class ToDoListComponent implements OnInit {
   }
 
   addTask(form: NgForm) {
-    if (this.task.description === '' || this.task.description == null) {
-      return;
-    }
-
-    if (this.duplicateTask(this.task)) {
-      this.errorMessage = "This task already exist";
-      setTimeout(() => {
-        this.errorMessage = '';
-      }, 1000);
-      return;
-    }
     
-    if (this.task.editing) {
+    // if (!this.task.description) return;
+    if (this.task.description === '' || this.task.description == null) {
+    return;
+  }
+
+    if (this.editTask) {
       this.apiService.updateData(this.task).subscribe({
-        next: (updatedTask) => {
+        next: () => {
           this.resetTask(form);
           this.showTasks();
+          this.editing = false;
         }
       });
     } else {
       this.apiService.postData(this.task).subscribe({
-        next: (newTask) => {
+        next: () => {
           this.resetTask(form);
           this.showTasks();
         },
@@ -94,6 +89,7 @@ export class ToDoListComponent implements OnInit {
             this.sortTasks();
             this.filterTasks();
           }
+          this.editing = false;
         }
       });
     } else {
@@ -121,6 +117,7 @@ export class ToDoListComponent implements OnInit {
       next: updatedTask => {
         const index = this.allTasks.findIndex(t => t.id === updatedTask.id);
         if (index !== -1) {
+          this.allTasks[index] = updatedTask;
           this.sortTasks();
         }
       }
@@ -137,17 +134,16 @@ export class ToDoListComponent implements OnInit {
     }
   }
 
-  editTask(task: Task): void {
-    if (task.id) {
-      this.apiService.updateData(task).subscribe({
-        next: () => {
+  editingTask(task: Task): void {
+    // if (task.id) {
+      // this.apiService.updateData(task).subscribe({
+        // next: () => {
           this.task = {...task};
-          this.task.editing = true;
-          this.selected = task.priority as TaskPriority;
-        }
-      })
-    } else {
-    }
+          this.editing = true;
+          // this.selected = task.priority as TaskPriority;
+        // }
+      // });
+    // }
   }
 
   combineClasses(task: Task): { [key: string]: boolean } {
@@ -163,7 +159,7 @@ export class ToDoListComponent implements OnInit {
 
   withDeadline(): void {
     if (!this.checkboxDeadline) {
-      this.task.deadline = '';
+      this.task.deadline = undefined;
     }
   }
 
@@ -186,7 +182,8 @@ export class ToDoListComponent implements OnInit {
 
   // Private methods
   private resetTask(form: NgForm): void {
-    this.task = { description: '', done: false, priority: TaskPriority.Lowest, deadline: '', editing: false };
+    this.task = { description: '', done: false, priority: TaskPriority.Lowest, deadline: undefined};
+    this.editTask = null;
     form.resetForm();
     this.selected = TaskPriority.Lowest;
   }
@@ -196,9 +193,6 @@ export class ToDoListComponent implements OnInit {
       if (a.done !== b.done) {
         return a.done ? 1 : -1;
       }
-      if (a.priority !== b.priority) {
-        return a.priority > b.priority ? 1 : -1;
-      }
       if (a.deadline && b.deadline) {
         return new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
       }
@@ -207,6 +201,9 @@ export class ToDoListComponent implements OnInit {
       }
       if (a.deadline && !b.deadline) {
           return -1;
+      }
+      if (a.priority !== b.priority) {
+        return a.priority > b.priority ? 1 : -1;
       }
       return 0;
     });
@@ -220,19 +217,5 @@ export class ToDoListComponent implements OnInit {
     } else {
       this.filteredTasks = this.allTasks;
     }
-  }
-  
-  private duplicateTask(newTask: Task): boolean {
-    return this.allTasks.some(task => {
-      if (task.id === newTask.id) {
-        return false;
-      }
-      if (
-        task.description.toLowerCase() === newTask.description.toLowerCase()
-      ) {
-        return true;
-      }
-      return false;
-    });
   }
 }

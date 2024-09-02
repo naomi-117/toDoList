@@ -61,13 +61,13 @@
                     </mat-icon>
                     <span class="task-deadline">{{ task.deadline | date:'dd.MM.yyyy' }}</span>
                     
-                    <div *ngIf="!editing">
+                    <div *ngIf="editTask?.id !== task.id">
                         <span class="task" [ngClass]="combineClasses(task)" (click)="selectTask(task)">{{ task.description }}</span>
                         <button type="button" title="Edit task" class="btn-icon edit-task buttons-style" (click)="editingTask(task)">
                             <mat-icon type="button" title="Edit task" class="material-symbols-rounded edit-task">edit</mat-icon>
                         </button>
                     </div>
-                    <div *ngIf="editing">
+                    <div *ngIf="editTask?.id == task.id">
                         <input type="text" class="form-control" [(ngModel)]="task.description">
                         <button type="button" (click)="editing = false; addTask(form)">Save</button> 
                     </div>
