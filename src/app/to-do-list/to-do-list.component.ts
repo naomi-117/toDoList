@@ -29,6 +29,8 @@ export class ToDoListComponent implements OnInit {
   checkboxDeadline: boolean = false;
   public TaskPriority = TaskPriority;
   errorMessage: string = '';
+  editing: boolean = false;
+  editTask: Task | null = null;
 
   constructor(
     private router: Router,
