@@ -49,6 +49,7 @@ ul {
     color: #c47f85;
     font-size: 28px;
     overflow: visible;
+    margin-right: 10px;
 }
 
 .delete-icon {
@@ -84,11 +85,7 @@ ul {
 
 .task {
     font-size: large;
-    text-align: left;
-    hyphens: auto;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    margin-left: 10px;
+    /* hyphens: auto; */
 }
 
 .task-item {
@@ -98,15 +95,21 @@ ul {
     border-left: none;
     border-right: none;
     padding: 10px;
-    width: 520px;
-    align-items: center;
+    max-width: 520px;
+    word-wrap: break-word;
+    hyphens: auto;
+    text-align: left;
 }
 
 .task-content {
+    max-width: 340px;
     display: flex;
-    align-items: center;
-    hyphens: auto;
-    overflow-wrap: break-word;
+    /* display: block; */
+    /* align-items: center; */
+    align-items: flex;
+    /* hyphens: auto; */
+    /* word-wrap: break-word; */
+    /* overflow-wrap: break-word; */
 }
 
 .d-flex {
@@ -205,6 +208,7 @@ ul {
     margin-top: 10px;
     margin-bottom: 25px;
     box-shadow: none;
+    width: 500px;
 }
 
 .priority-label {
@@ -233,7 +237,6 @@ ul {
     color: #b9656c;
     font-size: medium;
     position: absolute;
-    overflow: visible;
     left: 350px;
     border: 1px solid #333;
     width: 100px;
@@ -259,10 +262,4 @@ ul {
     overflow: visible;
     left: 230px;
     bottom: 8px;
-}
-
-.error {
-    color: red;
-    margin-bottom: 20px;
-    align-items: center;
 }
