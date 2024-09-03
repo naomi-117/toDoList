@@ -47,23 +47,21 @@ export class ToDoListComponent implements OnInit {
   }
 
   addTask(form: NgForm) {
-    
     // if (!this.task.description) return;
     if (this.task.description === '' || this.task.description == null) {
-    return;
-  }
+      return;
+    }
 
-    if (this.editTask) {
+    if (this.editing) {
       this.apiService.updateData(this.task).subscribe({
-        next: () => {
+        next: (updatedTask) => {
           this.resetTask(form);
           this.showTasks();
-          this.editing = false;
         }
       });
     } else {
       this.apiService.postData(this.task).subscribe({
-        next: () => {
+        next: (newTask) => {
           this.resetTask(form);
           this.showTasks();
         },
@@ -135,15 +133,14 @@ export class ToDoListComponent implements OnInit {
   }
 
   editingTask(task: Task): void {
-    // if (task.id) {
-      // this.apiService.updateData(task).subscribe({
-        // next: () => {
-          this.task = {...task};
+     if (task.id) {
+      this.apiService.updateData(task).subscribe({
+        next: () => {
           this.editing = true;
-          // this.selected = task.priority as TaskPriority;
-        // }
-      // });
-    // }
+          this.task = {...task};
+        }
+      });
+    }
   }
 
   combineClasses(task: Task): { [key: string]: boolean } {
