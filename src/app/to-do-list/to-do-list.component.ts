@@ -5,7 +5,7 @@ import { NgForm } from "@angular/forms";
 import { ApiService } from "../api.service";
 import { Task } from "../task";
 
-enum TaskPriority {
+export enum TaskPriority {
   Highest = '1',
   High = '2',
   Medium = '3',
@@ -38,7 +38,7 @@ export class ToDoListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-      this.showTasks();
+    this.showTasks();
   }
 
   // Public methods
@@ -57,6 +57,7 @@ export class ToDoListComponent implements OnInit {
         next: (updatedTask) => {
           this.resetTask(form);
           this.showTasks();
+          this.editing = false;
         }
       });
     } else {
