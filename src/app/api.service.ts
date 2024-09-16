@@ -14,19 +14,19 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  getData(): Observable<Task[]> {
+  getTask(): Observable<Task[]> {
     return this.http.get<Task[]>(this.apiUrl);
   }
 
-  postData(task: Task): Observable<Task> {    
+  postTask(task: Task): Observable<Task> {    
     return this.http.post<Task>(this.apiUrl, task);
   }
 
-  updateData(task: Task): Observable<Task> {
+  putTask(task: Task): Observable<Task> {
     return this.http.put<Task>(`${this.apiUrl}/${task.id}`, task);
   }
 
-  deleteData(id: number): Observable<Task> {
+  deleteTask(id: number): Observable<Task> {
     return this.http.delete<Task>(`${this.apiUrl}/${id}`);
   }
 }

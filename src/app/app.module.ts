@@ -17,25 +17,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { ApiService } from './api.service';
 import { ToDoListComponent } from './to-do-list/to-do-list.component';
 import { HomePageComponent } from './home-page/home-page.component';
-import { EditTaskComponent } from './edit-task/edit-task.component';
-import { SearchTaskComponent } from './search-task/search-task.component';
-import { DeleteTaskComponent } from './delete-task/delete-task.component';
-import { PriorityComponent } from './priority/priority.component';
-import { DeadlineComponent } from './deadline/deadline.component';
-import { AddTaskComponent } from './add-task/add-task.component';
-
+import { TaskDefinitionComponent } from './taskDefinition/taskDefinition.component';
+import { TaskManagerComponent } from './taskManager/taskManager.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ToDoListComponent,
     HomePageComponent,
-    EditTaskComponent,
-    SearchTaskComponent,
-    DeleteTaskComponent,
-    PriorityComponent,
-    DeadlineComponent,
-    AddTaskComponent
+    TaskDefinitionComponent,
+    TaskManagerComponent
   ],
   imports: [
     BrowserModule,
