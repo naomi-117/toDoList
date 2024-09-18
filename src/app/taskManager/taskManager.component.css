@@ -1,0 +1,161 @@
+.task-item {
+    border-bottom: 1px solid #b9656c;
+    border-radius: 0%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.task-content {
+    max-width: 400px;
+    padding: 10px;
+    display: flex;
+    word-break: break-all;
+}
+
+.buttons-style {
+    background: none; 
+    border: none; 
+    padding: 0;
+}
+
+.check-icon {
+    color: #c47f85;
+    font-size: 28px;
+    overflow: visible;
+    margin-right: 10px;
+}
+
+.task-deadline {
+    color: #b9656c;
+    font-size: medium;
+    position: absolute;
+    left: 350px;
+    border: 1px solid #333;
+    width: 100px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task {
+    font-size: large;
+    word-break: break-all;
+}
+
+.buttons-style {
+    background: none; 
+    border: none; 
+}
+
+.edit-task {
+    color: #c47f85;
+    position: absolute;
+    left: 270px;
+    top: 10px;
+}
+
+.delete-icon {
+    color: #c47f85;
+    position: absolute;
+    left: 570px;
+}
+
+.done {
+    text-decoration: line-through;
+    color: grey;
+}
+
+.search-input {
+    background-color: #cca9ab;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    box-shadow: none;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.task-deadline {
+    display: block;
+    font-size: medium;
+    color: #b9656c;
+    left: 410px;
+}
+
+.priority-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.priority-label {
+    color: #c47f85;
+    text-align: left;
+    font-size: 15px;
+    margin-top: 10px; 
+    margin-bottom: 10px;
+}
+
+.priority-highest {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.priority-highest-button {
+    background-color: #ff0000;
+}
+
+.priority-high {
+    color: #ff6a6a;
+    font-weight: bold;
+}
+
+.priority-high-button {
+    background-color: #ff6a6a;
+}
+
+.priority-medium {
+    color: #ff9100;
+    font-weight: bold;
+}
+
+.priority-medium-button {
+    background-color: #ff9100;
+}
+
+.priority-low {
+    color: #ffbb00;
+    font-weight: bold;
+}
+
+.priority-low-button {
+    background-color: #ffbb00;
+}
+
+.priority-lowest {
+    color: #cccccc;
+    font-weight: bold;
+}
+
+.priority-lowest-button {
+    background-color: #cccccc;
+}
+
+.btn-active {
+    border: 1px solid rgb(80, 80, 80);
+    color: white;
+}
+
+.priority-highest-button, .priority-high-button, .priority-medium-button, .priority-low-button, .priority-lowest-button {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+:focus:not(:focus-visible) {
+    outline: 0;
+    box-shadow: none;
+}
