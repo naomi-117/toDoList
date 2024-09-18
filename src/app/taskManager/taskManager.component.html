@@ -1,7 +1,7 @@
 <input type="text" [(ngModel)]="search" (ngModelChange)="searchTasks($event)" class="form-control form-control-sm search-input" placeholder="Search tasks...">
 
 <ul class="list-group mt-3">
-  <li class="list-group-item task-item" *ngFor="let task of theTasks">
+  <li class="list-group-item task-item" *ngFor="let task of tasks">
     <div [ngClass]="combineClasses(task)"
       [ngClass]="{
         'btn-active': selected === task.priority,

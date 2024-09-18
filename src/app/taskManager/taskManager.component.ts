@@ -4,6 +4,14 @@ import { Task } from '../task';
 import { TaskPriority } from '../to-do-list/to-do-list.component';
 import { ApiService } from '../api.service';
 
+const taskPriorityMapping:Record<string, number> = {
+  'Lowest': 0,
+  'Low': 1,
+  'Medium': 2,
+  'High': 3,
+  'Highest': 4
+}
+
 @Component({
   selector: 'app-taskManager',
   templateUrl: './taskManager.component.html',
@@ -11,14 +19,13 @@ import { ApiService } from '../api.service';
 })
 export class TaskManagerComponent implements OnInit, OnChanges {
   search: string = '';
-  theTasks: Task[] = [];
   task: Task = { description: '', done: false, priority: TaskPriority.Lowest, deadline: undefined };
   selected: TaskPriority = TaskPriority.Lowest;
   selectedTask: Task | null = null;
   checkboxDeadline: boolean = false;
   editing: boolean = false;
   editTask: Task | null = null;
-  public taskPriority = TaskPriority;
+  taskPriority = TaskPriority;
 
   @Input() description: string = '';
   @Input() tasks: Task[] = [];
@@ -33,11 +40,13 @@ export class TaskManagerComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.fetchTasks();
+    this.sortTasks();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['tasks']) {
       this.filterTasks();
+      this.sortTasks();
     }
   }
 
@@ -46,8 +55,9 @@ export class TaskManagerComponent implements OnInit, OnChanges {
       next: (tasks: Task[]) => {
         this.tasks = tasks;
         this.filterTasks();
+        this.sortTasks();
       }
-    })
+    });
   }
 
   toggleDone(task: Task): void {
@@ -116,20 +126,19 @@ export class TaskManagerComponent implements OnInit, OnChanges {
    // Private methods
    private filterTasks() {
     if (this.search.trim() !== '') {
-      this.theTasks = this.tasks.filter(task =>
+      this.tasks = this.tasks.filter(task =>
       task.description.toLowerCase().includes(this.search.toLowerCase())      
       );
     } else {
-      this.theTasks = this.tasks;
+      this.tasks = this.tasks;
     }
-    this.sortTasks();
   }
 
   private sortTasks(): void {
-    if (!this.theTasks || this.theTasks.length === 0) {
+    if (!this.tasks || this.tasks.length === 0) {
       return;
     }
-    this.theTasks.sort((a: Task, b: Task) => {
+    this.tasks.sort((a: Task, b: Task) => {      
       if (a.done !== b.done) {
         return a.done ? 1 : -1;
       }
@@ -146,7 +155,10 @@ export class TaskManagerComponent implements OnInit, OnChanges {
         return 1;
       }
 
-      return b.priority - a.priority;
+      const priorityA = taskPriorityMapping[a.priority as unknown as keyof typeof taskPriorityMapping] ?? taskPriorityMapping['Lowest']
+      const priorityB = taskPriorityMapping[b.priority as unknown as keyof typeof taskPriorityMapping] ?? taskPriorityMapping['Lowest']
+    
+      return priorityB - priorityA;
     });
   }
 }
