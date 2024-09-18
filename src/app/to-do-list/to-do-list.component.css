@@ -1,39 +1,8 @@
-.centered-text, 
-.search-container {
-    align-items: center;
-}
-
-.text-left {
-    text-align: left;
-}
-
-.page {
-    text-align: center;
-    background-color:white;
-    padding: 50px;
-    height: 820px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    overflow-y: auto;
-}
-
 h1 {
     font-family: 'Courier New', Courier, monospace;
     font-size: 70px;
     margin-top: 10px;
     align-items: center;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.title {
-    color: #c47f85; 
-    text-align: center; 
-    margin-bottom: 20px
 }
 
 .relative {
@@ -45,221 +14,30 @@ ul {
     font-size: 28px;
 }
 
-.task-icon {
-    color: #c47f85;
-    font-size: 28px;
-    overflow: visible;
-    margin-right: 10px;
-}
-
-.delete-icon {
-    color: #c47f85;
-    position: absolute;
-    left: 490px;
-    bottom: 15px;
-    overflow: visible;
-}
-
-.add_save-icon {
-    color: #c47f85;
-    font-size: 28px;
-    width: 35px;
-    height: 30px;
-    margin-top: 10px;
-}
-
-.task-input-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.task-input {
-    flex: 1;
-    padding: 10px;
-    color: #c47f85;
-    border-color: #c47f85; 
-    border-width: 2px;
-    box-shadow: none;
-}
-
-.task {
-    font-size: large;
-    /* hyphens: auto; */
-}
-
-.task-item {
-    border-bottom: 1px solid #b9656c;
-    border-radius: 0%;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    padding: 10px;
-    max-width: 520px;
-    word-wrap: break-word;
-    hyphens: auto;
-    text-align: left;
-}
-
-.task-content {
-    max-width: 340px;
-    display: flex;
-    /* display: block; */
-    /* align-items: center; */
-    align-items: flex;
-    /* hyphens: auto; */
-    /* word-wrap: break-word; */
-    /* overflow-wrap: break-word; */
-}
-
-.d-flex {
-    display: flex;
-    gap: 10px;
-}
-
-.align-items-center{
-    align-items: center;
-}
-
-.me-4 {
-    margin-right: 1.5rem;
-}
-
 .home-button {
     position: absolute;
-    top: -35px;
-    left: -20px;
+    top: -20px;
+    left: -10px;
+    border: 0;
+    background: none;
 }
 
-.buttons-style {
-    background: none; 
-    border: none; 
-    padding: 0;
-}
-
-.priority-highest {
-    color: #ff0000;
-    font-weight: bold;
-}
-
-.priority-highest-button {
-    background-color: #ff0000;
-}
-
-.priority-high {
-    color: #ff6a6a;
-    font-weight: bold;
-}
-
-.priority-high-button {
-    background-color: #ff6a6a;
-}
-
-.priority-medium {
-    color: #ff9100;
-    font-weight: bold;
-}
-
-.priority-medium-button {
-    background-color: #ff9100;
-}
-
-.priority-low {
-    color: #ffbb00;
-    font-weight: bold;
-}
-
-.priority-low-button {
-    background-color: #ffbb00;
-}
-
-.priority-lowest {
-    color: #cccccc;
-    font-weight: bold;
-}
-
-.priority-lowest-button {
-    background-color: #cccccc;
-}
-
-.btn-active {
-    border: 1px solid rgb(80, 80, 80);
-    color: white;
-}
-
-.priority-highest-button, .priority-high-button, .priority-medium-button, .priority-low-button, .priority-lowest-button {
-    padding: 5px 10px;
-    border-radius: 5px;
-    color: #ffffff;
-}
-
-:focus:not(:focus-visible) {
-    outline: 0;
-    box-shadow: none;
-}
-
-.done {
-    text-decoration: line-through;
-    color: grey;
-}
-
-.search-input {
-    background-color: #cca9ab;
-    margin-top: 10px;
-    margin-bottom: 25px;
-    box-shadow: none;
-    width: 500px;
-}
-
-.priority-label {
+.title {
     color: #c47f85;
-    text-align: left;
-    font-size: 15px;
-    margin-top: 10px; 
-    margin-bottom: 10px;
-}
-
-.datepicker {
-    color: #c47f85;
-    margin-top: 15px;
-    margin-bottom: 10px;
-}
-
-.mat-label {
-    color: #c47f85;
-}
-
-.mat-hint {
-    color: #c47f85;
-}
-
-.task-deadline {
-    color: #b9656c;
-    font-size: medium;
-    position: absolute;
-    left: 350px;
-    border: 1px solid #333;
-    width: 100px;
     text-align: center;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
-.deadline-container {
-    display: flex;
+.page {
+    display: block;
     align-items: center;
-    margin-left: auto;
-}
-
-.deadline-availability {
-    color: #c47f85;
-    margin-left: 20px;
-}
-
-.edit-task {
-    color: #c47f85;
-    position: absolute;
-    overflow: visible;
-    left: 230px;
-    bottom: 8px;
+    background-color:white;
+    padding: 40px;
+    height: 820px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 720px;
+    overflow-y: auto;
+    word-wrap: break-word;
+    align-items: flex-start;
 }
