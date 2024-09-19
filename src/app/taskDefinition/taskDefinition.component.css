@@ -69,45 +69,20 @@
     margin-bottom: 10px;
 }
 
-.priority-highest {
-    color: #ff0000;
-    font-weight: bold;
-}
-
 .priority-highest-button {
     background-color: #ff0000;
-}
-
-.priority-high {
-    color: #ff6a6a;
-    font-weight: bold;
 }
 
 .priority-high-button {
     background-color: #ff6a6a;
 }
 
-.priority-medium {
-    color: #ff9100;
-    font-weight: bold;
-}
-
 .priority-medium-button {
     background-color: #ff9100;
 }
 
-.priority-low {
-    color: #ffbb00;
-    font-weight: bold;
-}
-
 .priority-low-button {
     background-color: #ffbb00;
-}
-
-.priority-lowest {
-    color: #cccccc;
-    font-weight: bold;
 }
 
 .priority-lowest-button {
