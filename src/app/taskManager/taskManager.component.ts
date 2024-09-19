@@ -68,6 +68,7 @@ export class TaskManagerComponent implements OnInit, OnChanges {
         if (index !== -1) {
           this.tasks[index] = updatedTask;
           this.filterTasks();
+          this.sortTasks();
           this.taskDone.emit();
         }
       }
@@ -138,7 +139,7 @@ export class TaskManagerComponent implements OnInit, OnChanges {
     if (!this.tasks || this.tasks.length === 0) {
       return;
     }
-    this.tasks.sort((a: Task, b: Task) => {      
+    this.tasks.sort((a: Task, b: Task) => {
       if (a.done !== b.done) {
         return a.done ? 1 : -1;
       }
