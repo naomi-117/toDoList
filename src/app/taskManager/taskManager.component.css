@@ -105,17 +105,9 @@ ul {
     font-weight: bold;
 }
 
-.priority-highest-button {
-    background-color: #ff0000;
-}
-
 .priority-high {
     color: #ff6a6a;
     font-weight: bold;
-}
-
-.priority-high-button {
-    background-color: #ff6a6a;
 }
 
 .priority-medium {
@@ -123,40 +115,12 @@ ul {
     font-weight: bold;
 }
 
-.priority-medium-button {
-    background-color: #ff9100;
-}
-
 .priority-low {
     color: #ffbb00;
     font-weight: bold;
 }
 
-.priority-low-button {
-    background-color: #ffbb00;
-}
-
 .priority-lowest {
     color: #cccccc;
     font-weight: bold;
-}
-
-.priority-lowest-button {
-    background-color: #cccccc;
-}
-
-.btn-active {
-    border: 1px solid rgb(80, 80, 80);
-    color: white;
-}
-
-.priority-highest-button, .priority-high-button, .priority-medium-button, .priority-low-button, .priority-lowest-button {
-    padding: 5px 10px;
-    border-radius: 5px;
-    color: #ffffff;
-}
-
-:focus:not(:focus-visible) {
-    outline: 0;
-    box-shadow: none;
 }
