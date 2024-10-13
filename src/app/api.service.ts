@@ -29,4 +29,8 @@ export class ApiService {
   deleteTask(id: number): Observable<Task> {
     return this.http.delete<Task>(`${this.apiUrl}/${id}`);
   }
+
+  deleteAllTasks(): Observable<void> {
+    return this.http.delete<void>(this.apiUrl);
+  }
 }
