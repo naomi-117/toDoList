@@ -2,44 +2,44 @@
     <div ngModelGroup="task" class="task-input-container">
         <input title="Add a new task" class="form-control task-input" name="description" placeholder="New task" required [(ngModel)]="task.description"/>
         <button type="submit" title="{{ editing ? 'Save task' : 'Add a new task' }}" class="btn-icon buttons-style">
-            <mat-icon class="material-symbols-rounded add_save-icon">
+            <span class="material-symbols-rounded add-icon">
                 {{ editing ? 'save' : 'add_circle' }}
-            </mat-icon>
+            </span>
         </button>
     </div>
     <div class="d-flex" style="width: fit-content; height: fit-content;">
         <div class="labels-container me-4">
-            <h2 title="Priority" class="priority-label">Priority:</h2>
-            <div class="btn-toolbar" role="toolbar">
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn"
-                            *ngFor="let priority of [TaskPriority.Highest, TaskPriority.High, TaskPriority.Medium, TaskPriority.Low, TaskPriority.Lowest]"
-                            [ngClass]="{
-                                'btn-active': selected === priority,
-                                'priority-highest-button': priority === TaskPriority.Highest,
-                                'priority-high-button': priority === TaskPriority.High,
-                                'priority-medium-button': priority === TaskPriority.Medium,
-                                'priority-low-button': priority === TaskPriority.Low,
-                                'priority-lowest-button': priority === TaskPriority.Lowest
-                            }"
-                            (click)="setPriority(priority)">
-                        {{ priority }}
-                    </button>                     
+            <div class="priority-group">
+                <h2 title="Priority" class="priority-label">Priority:</h2>
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn"
+                                *ngFor="let priority of [TaskPriority.Highest, TaskPriority.High, TaskPriority.Medium, TaskPriority.Low, TaskPriority.Lowest]"
+                                [ngClass]="{
+                                    'btn-active': selected === priority,
+                                    'priority-highest-button': priority === TaskPriority.Highest,
+                                    'priority-high-button': priority === TaskPriority.High,
+                                    'priority-medium-button': priority === TaskPriority.Medium,
+                                    'priority-low-button': priority === TaskPriority.Low,
+                                    'priority-lowest-button': priority === TaskPriority.Lowest
+                                }"
+                                (click)="setPriority(priority)">{{ priority }}
+                        </button>                     
+                    </div>
                 </div>
             </div>
         </div>
         <div class="deadline-container">
-            <mat-form-field class="datepicker" title="Select a deadline">
-                <mat-label>Select a deadline</mat-label>
-                <input matInput [matDatepicker]="datepicker" [(ngModel)]="task.deadline" style="color: #b9656c; font-size: large" name="deadline" [placeholder]="task.deadline ? '' : 'Select a deadline'">
-                <span class="task-deadline" *ngIf="task.deadline">{{ task.deadline | date: 'dd.MM.yyyy' }}</span>
+            <mat-form-field class="datepicker">
+                <mat-label class="datepicker">Select a deadline</mat-label>
+                <input matInput [matDatepicker]="datepicker" [(ngModel)]="task.deadline" name="deadline" [placeholder]="task.deadline ? '' : 'Select a deadline'">
                 <mat-hint>DD.MM.YYYY</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                <mat-datepicker-toggle class="mat-icon-button" matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
                 <mat-datepicker #datepicker></mat-datepicker>
             </mat-form-field>
-            <mat-icon [title]="task.deadline ? 'Without deadline' : 'With deadline'" type="button" class="btn-icon material-symbols-rounded deadline-availability buttons-style" (click)="withDeadline()">
+            <span [title]="task.deadline ? 'Without deadline' : 'With deadline'" type="button" class="btn-icon material-symbols-rounded deadline-availability buttons-style" (click)="withDeadline()">
                 {{ task.deadline ? 'event_busy' : 'event_available'}}
-            </mat-icon>
+            </span>
         </div>
     </div>
 </form>

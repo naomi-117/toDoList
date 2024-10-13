@@ -1,36 +1,33 @@
-<input type="text" [(ngModel)]="search" (ngModelChange)="searchTasks($event)" class="form-control form-control-sm search-input" placeholder="Search tasks...">
-
+<input type="text" [(ngModel)]="search" (ngModelChange)="searchTasks()" class="form-control form-control-sm search-input" placeholder="Search tasks...">
+<button type="button" class="buttons-style delete-all-tasks" (click)="deleteAllTasks()">Delete all tasks</button>
 <ul class="list-group mt-3">
   <li class="list-group-item task-item" *ngFor="let task of tasks">
-    <div [ngClass]="combineClasses(task)"
-      [ngClass]="{
-        'btn-active': selected === task.priority,
-        'priority-highest-button': task.priority === taskPriority.Highest,
-        'priority-high-button': task.priority === taskPriority.High,
-        'priority-medium-button': task.priority === taskPriority.Medium,
-        'priority-low-button': task.priority === taskPriority.Low,
-        'priority-lowest-button': task.priority === taskPriority.Lowest
-    }">
-    </div>
     <div class="task-content">
-      <mat-icon type="button" class="btn-icon buttons-style material-symbols-rounded check-icon" (click)="toggleDone(task)">
+      <span type="button" class="btn-icon buttons-style material-symbols-rounded check-icon" (click)="toggleDone(task)">
         {{ task.done ? 'check_box' : 'check_box_outline_blank' }}
-      </mat-icon>
+      </span>
       <span class="task-deadline">{{ task.deadline | date:'dd.MM.yyyy' }}</span>
-      <div *ngIf="editTask?.id !== task.id">
-        <span class="task" [ngClass]="combineClasses(task)" (click)="selectTask(task)">{{ task.description }}</span>
+      <div *ngIf="!editing || editTask?.id !== task.id">
+        <div class="task" 
+        [ngClass]="{
+          'done': task.done,
+          'priority-highest': !task.done && taskPriorityMapping[task.priority] === taskPriority.Highest,
+          'priority-high': !task.done && taskPriorityMapping[task.priority] === taskPriority.High,
+          'priority-medium': !task.done && taskPriorityMapping[task.priority] === taskPriority.Medium,
+          'priority-low': !task.done && taskPriorityMapping[task.priority] === taskPriority.Low,
+          'priority-lowest': !task.done && taskPriorityMapping[task.priority] === taskPriority.Lowest
+        }">
+          {{ task.description }} 
+        </div>
         <button type="button" title="Edit task" class="btn-icon edit-task buttons-style" (click)="editingTask(task)">
           <mat-icon type="button" title="Edit task" class="material-symbols-rounded edit-task">edit</mat-icon>
         </button>
       </div>
-      <div *ngIf="editTask?.id === task.id">
+      <div *ngIf="editing && editTask?.id === task.id">
         <input type="text" class="form-control" [(ngModel)]="task.description">
-        <button type="button" (click)="editingTask(task)">Save</button>
+        <button type="button" class="save-button" (click)="saveTask()">Save</button>
       </div>
-
-      <mat-icon type="button" title="Delete task" class="material-symbols-rounded btn-icon buttons-style delete-icon" (click)="deleteTask(task)">
-        delete
-      </mat-icon>
+      <mat-icon type="button" title="Delete task" class="material-symbols-rounded btn-icon buttons-style delete-icon" (click)="deleteTask(task)">delete</mat-icon>
     </div>
   </li>
 </ul>

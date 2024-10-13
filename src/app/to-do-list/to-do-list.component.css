@@ -11,11 +11,10 @@ h1 {
 
 .home-icon {
     color: #c47f85;
-    font-size: 28px;
+    font-size: 30px;
 }
 
 .home-button {
-    position: absolute;
     top: -20px;
     left: -10px;
     border: 0;

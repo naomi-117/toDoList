@@ -1,16 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 import { Task } from '../task';
 import { TaskPriority } from '../to-do-list/to-do-list.component';
 import { ApiService } from '../api.service';
-
-const taskPriorityMapping:Record<string, number> = {
-  'Lowest': 0,
-  'Low': 1,
-  'Medium': 2,
-  'High': 3,
-  'Highest': 4
-}
 
 @Component({
   selector: 'app-taskManager',
@@ -22,21 +15,28 @@ export class TaskManagerComponent implements OnInit, OnChanges {
   task: Task = { description: '', done: false, priority: TaskPriority.Lowest, deadline: undefined };
   selected: TaskPriority = TaskPriority.Lowest;
   selectedTask: Task | null = null;
-  checkboxDeadline: boolean = false;
   editing: boolean = false;
   editTask: Task | null = null;
   taskPriority = TaskPriority;
+  form: NgForm;
 
   @Input() description: string = '';
   @Input() tasks: Task[] = [];
 
-  @Output() searchChanged = new EventEmitter<string>();
   @Output() taskDone = new EventEmitter<void>();
   @Output() taskPriorityChanged = new EventEmitter<Task>();
+  @Output() taskAdded = new EventEmitter<Task>();
+  @Output() taskUpdated = new EventEmitter<Task>();
 
-  constructor(
-    private apiService: ApiService
-  ) {}
+  taskPriorityMapping: Record<string, number> = {
+    'Lowest': 0,
+    'Low': 1,
+    'Medium': 2,
+    'High': 3,
+    'Highest': 4
+  }
+
+  constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
     this.fetchTasks();
@@ -46,6 +46,20 @@ export class TaskManagerComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['tasks']) {
       this.filterTasks();
+      this.sortTasks();
+    }
+  }
+
+  onTaskAdded(task: Task) {
+    this.tasks.push(task);
+    this.sortTasks();
+    this.taskAdded.emit(task);
+  }
+
+  onTaskUpdated(updatedTask: Task): void {
+    const index = this.tasks.findIndex(task => task.id === updatedTask.id);
+    if (index !== -1) {
+      this.tasks[index] = updatedTask;
       this.sortTasks();
     }
   }
@@ -78,60 +92,56 @@ export class TaskManagerComponent implements OnInit, OnChanges {
   deleteTask(task: Task): void {
     if (task.id) {
       this.apiService.deleteTask(task.id).subscribe({
-        next: () => {
-          this.fetchTasks();      
-        }
+        next: () => this.fetchTasks()      
+      });
+    }
+  }
+
+  deleteAllTasks(): void {
+    if (confirm('Are you sure you want to delete all tasks?')) {
+      this.apiService.deleteAllTasks().subscribe({
+        next: () => this.fetchTasks()
       });
     }
   }
   
-  searchTasks(event: any): void { 
-    this.filterTasks();
-    this.searchChanged.emit(this.search);
+  searchTasks(): void {
+    this.fetchTasks();
   }
 
   editingTask(task: Task): void {
-     if (task.id) {
-      this.apiService.putTask(task).subscribe({
+    if (task.id) {
+      this.apiService.putTask(task).subscribe({        
         next: (updatedTask) => {
           this.editing = true;
-          this.editTask = { ...updatedTask };
+        this.editTask = { ...updatedTask };
         }
       });
     }
   }
 
-  private getPriorityClass(priority: TaskPriority): string {
-    switch (priority) {
-      case TaskPriority.Highest: return 'priority-highest';
-      case TaskPriority.High: return 'priority-high';
-      case TaskPriority.Medium: return 'priority-medium';
-      case TaskPriority.Low: return 'priority-low';
-      case TaskPriority.Lowest: return 'priority-lowest';
-      default: return '';
+  saveTask(): void {
+    if (this.editTask && this.editTask.id) {
+      this.apiService.putTask(this.editTask).subscribe({
+        next: (updatedTask) => {
+          const index = this.tasks.findIndex(t => t.id === updatedTask.id);
+          if (index !== -1) {
+            this.tasks[index] = updatedTask;
+          }
+          this.editing = false;
+          this.editTask = null;
+          this.resetTask();
+        }
+      });
     }
-  }
-  
-  combineClasses(task: Task): { [key: string]: boolean } {
-    return {
-      'done': task.done,
-      [this.getPriorityClass(task.priority)]: true
-    };
-  }
-
-  selectTask(task: Task): void {
-    this.selectedTask = task;
-    this.selected = TaskPriority.Lowest;
   }
 
    // Private methods
-   private filterTasks() {
+   private filterTasks(): void {
     if (this.search.trim() !== '') {
       this.tasks = this.tasks.filter(task =>
-      task.description.toLowerCase().includes(this.search.toLowerCase())      
+      task.description.toLowerCase().includes(this.search.toLowerCase()) 
       );
-    } else {
-      this.tasks = this.tasks;
     }
   }
 
@@ -139,6 +149,7 @@ export class TaskManagerComponent implements OnInit, OnChanges {
     if (!this.tasks || this.tasks.length === 0) {
       return;
     }
+
     this.tasks.sort((a: Task, b: Task) => {
       if (a.done !== b.done) {
         return a.done ? 1 : -1;
@@ -156,10 +167,16 @@ export class TaskManagerComponent implements OnInit, OnChanges {
         return 1;
       }
 
-      const priorityA = taskPriorityMapping[a.priority as unknown as keyof typeof taskPriorityMapping] ?? taskPriorityMapping['Lowest']
-      const priorityB = taskPriorityMapping[b.priority as unknown as keyof typeof taskPriorityMapping] ?? taskPriorityMapping['Lowest']
+      const priorityA = this.taskPriorityMapping[a.priority as unknown as keyof typeof this.taskPriorityMapping] ?? this.taskPriorityMapping['Lowest']
+      const priorityB = this.taskPriorityMapping[b.priority as unknown as keyof typeof this.taskPriorityMapping] ?? this.taskPriorityMapping['Lowest']
     
       return priorityB - priorityA;
     });
+  }
+
+  private resetTask(): void {
+    this.task = { description: '', done: false, priority: this.selected, deadline: undefined};
+    this.editing = false;
+    // form.reset({ priority: TaskPriority.Lowest });
   }
 }

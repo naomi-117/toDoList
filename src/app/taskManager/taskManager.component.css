@@ -7,30 +7,25 @@
 }
 
 .task-content {
-    max-width: 400px;
-    padding: 10px;
+    max-width: 410px;
+    padding-bottom: 10px;
+    padding-top: 10px;
     display: flex;
     word-break: break-all;
-}
-
-.buttons-style {
-    background: none; 
-    border: none; 
-    padding: 0;
 }
 
 .check-icon {
     color: #c47f85;
     font-size: 28px;
     overflow: visible;
-    margin-right: 10px;
+    margin-right: 15px;
 }
 
 .task-deadline {
     color: #b9656c;
     font-size: medium;
     position: absolute;
-    left: 350px;
+    left: 430px;
     border: 1px solid #333;
     width: 100px;
     text-align: center;
@@ -46,24 +41,36 @@
 .buttons-style {
     background: none; 
     border: none; 
+    padding: 0;
 }
 
 .edit-task {
     color: #c47f85;
     position: absolute;
-    left: 270px;
-    top: 10px;
+    left: 275px;
+    top: 9px;
+    font-size: 25px;
 }
 
 .delete-icon {
     color: #c47f85;
     position: absolute;
-    left: 570px;
+    left: 580px;
+    font-size: 25px;
+}
+
+.delete-all-tasks {
+    color: #c47f85;
+    margin-left: 510px;
+    position: relative;
+    text-decoration-line: underline;
+    font-size: medium;
 }
 
 .done {
-    text-decoration: line-through;
+    text-decoration: line-through grey;
     color: grey;
+    font-weight: 600;
 }
 
 .search-input {
@@ -76,27 +83,6 @@
 ul {
     list-style-type: none;
     padding: 0;
-}
-
-.task-deadline {
-    display: block;
-    font-size: medium;
-    color: #b9656c;
-    left: 410px;
-}
-
-.priority-buttons {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.priority-label {
-    color: #c47f85;
-    text-align: left;
-    font-size: 15px;
-    margin-top: 10px; 
-    margin-bottom: 10px;
 }
 
 .priority-highest {
@@ -122,4 +108,14 @@ ul {
 .priority-lowest {
     color: #cccccc;
     font-weight: bold;
+}
+
+.save-button {
+    color: white;
+    background-color: #c47f85;
+    width: 50px;
+    height: 30px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
 }

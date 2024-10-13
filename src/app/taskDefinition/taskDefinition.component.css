@@ -1,24 +1,8 @@
-.centered-text, 
-.search-container {
-    align-items: center;
-}
-
-.text-left {
-    text-align: left;
-}
-
 .task-input-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 620px;
-}
-
-.priority-buttons, .deadline-picker {
-    display: flex;
-    margin: 10px;
-    align-items: center;
-    justify-content: space-between;
 }
 
 .task-input {
@@ -37,8 +21,7 @@
     border: none; 
     padding: 0;
 }
-
-.add_save-icon {
+.add-icon {
     color: #c47f85;
     font-size: 28px;
     width: 35px;
@@ -46,27 +29,18 @@
     margin-top: 10px;
 }
 
-.align-items-center{
-    align-items: center;
-}
-
 .me-4 {
     margin-right: 1.5rem;
 }
 
-.priority-buttons {
-    display: block;
-    justify-content: space-between;
-    width: 100%;
-    align-items: center;
+.priority-group {
+    margin-top: 25px;
 }
 
 .priority-label {
     color: #c47f85;
     text-align: left;
-    font-size: 15px;
-    margin-top: 10px; 
-    margin-bottom: 10px;
+    font-size: 17px;
 }
 
 .priority-highest-button {
@@ -95,9 +69,10 @@
 }
 
 .priority-highest-button, .priority-high-button, .priority-medium-button, .priority-low-button, .priority-lowest-button {
-    padding: 5px 10px;
+    padding: 7px 15px;
     border-radius: 5px;
     color: #ffffff;
+    font-size: large;
 }
 
 :focus:not(:focus-visible) {
@@ -108,17 +83,13 @@
 .deadline-container {
     display: block;
     align-items: center;
-    margin-left: 50px;
+    margin-left: 100px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
-.task-deadline {
-    color: #b9656c;
-    font-size: medium;
-    position: absolute;
-    border: 1px solid #333;
-    width: 100%;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.mat-icon-button {
+    color: #c47f85;
 }
 
 .deadline-availability {
@@ -126,25 +97,10 @@
     margin-left: 20px;
 }
 
-.priority-label {
-    color: #c47f85;
-    text-align: left;
-    font-size: 15px;
-    margin-top: 10px; 
-    margin-bottom: 10px;
-}
-
 .datepicker {
     color: #c47f85;
     margin-top: 15px;
     margin-bottom: 10px;
-}
-
-.check-icon {
-    color: #c47f85;
-    font-size: 28px;
-    overflow: visible;
-    margin-right: 10px;
 }
 
 .mat-label {

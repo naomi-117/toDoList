@@ -17,17 +17,19 @@ export class TaskDefinitionComponent implements OnInit {
   selected: TaskPriority = TaskPriority.Lowest;
   selectedTask: Task | null = null;
   editing: boolean = false;
-  editTask: Task | null = null;
+  // editTask: Task | null = null;
   checkboxDeadline: boolean = false;
   public TaskPriority = TaskPriority;
 
   @Input() selectedPriority: TaskPriority | null = null;
   @Input() deadline: Date | null = null;
   @Input() tasks: Task[] = [];
+  @Input() editTask: Task | null = null;
 
   @Output() prioritySelected = new EventEmitter<TaskPriority>();
   @Output() deadlineSet = new EventEmitter<Date | null>();
   @Output() taskAdded = new EventEmitter<Task>();
+  @Output() taskUpdated = new EventEmitter<Task>();
 
   constructor(
     private router: Router,
@@ -77,20 +79,9 @@ export class TaskDefinitionComponent implements OnInit {
     this.deadlineSet.emit(this.task.deadline);
   }
 
-
-  // Public methods
   addTask(form: NgForm): void {
-    console.log('Adding task with priority:', this.task.priority);
     if (this.task.description === '') {
       return;
-    }
-
-    if (this.editing) {
-      this.apiService.putTask(this.task).subscribe({
-        next: () => {
-          this.resetTask(form);
-        }
-      });
     } else {
       this.apiService.postTask(this.task).subscribe({
         next: () => {
@@ -103,9 +94,7 @@ export class TaskDefinitionComponent implements OnInit {
     return;
   }
 
-  // Private methods
-  private resetTask(form: NgForm): void {
-    // this.task = { description: '', done: false, priority: TaskPriority.Lowest, deadline: undefined};
+  resetTask(form: NgForm): void {
     this.task = { description: '', done: false, priority: this.selected, deadline: undefined};
     this.editing = false;
     form.reset({ priority: TaskPriority.Lowest });
