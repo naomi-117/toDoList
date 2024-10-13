@@ -19,6 +19,7 @@ import { ToDoListComponent } from './to-do-list/to-do-list.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { TaskDefinitionComponent } from './taskDefinition/taskDefinition.component';
 import { TaskManagerComponent } from './taskManager/taskManager.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { TaskManagerComponent } from './taskManager/taskManager.component';
     ToDoListComponent,
     HomePageComponent,
     TaskDefinitionComponent,
-    TaskManagerComponent
+    TaskManagerComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +42,8 @@ import { TaskManagerComponent } from './taskManager/taskManager.component';
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatIconModule
+    MatIconModule,
+    MatSidenavModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [ApiService, DatePipe, 
