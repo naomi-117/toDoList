@@ -1,12 +1,12 @@
 <div class="page container mt-5">
     <div class="relative">
-        <button type="button" title="Go to home page" class="btn-icon home-button buttons-style" (click)="homeButtonClicked()">
-            <mat-icon class="material-symbols-rounded home-icon">home</mat-icon>
+        <button type="button" title="Go to home page" class="material-symbols-rounded home-button buttons-style" (click)="homeButtonClicked()">
+            <span class="material-symbols-rounded home-icon">home</span>
         </button>
         <h1 class="title">TO DO LIST</h1>
     </div>
 
     <app-taskDefinition (taskAdded)="reloadTasks()"></app-taskDefinition>
-
     <app-taskManager [tasks]="tasks"></app-taskManager>
+    <app-sidenav></app-sidenav>
 </div>
